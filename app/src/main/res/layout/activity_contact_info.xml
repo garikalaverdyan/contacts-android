@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:screenOrientation="portrait"
+    tools:context="com.garikalaverdyan.contacts.ui.activity.AddAndEditActivity">
+
+    <ImageView
+        android:id="@+id/contact_view_header"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:scaleType="centerCrop"
+        android:background="@drawable/andriod_header"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/line"
+        app:layout_constraintTop_toTopOf="@id/contactInfoCircle"
+        app:layout_constraintBottom_toBottomOf="@id/contactInfoCircle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/contactInfoCircle"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/circle2"
+        android:textAlignment="center"
+        android:textColor="#1c92f2"
+        android:textSize="70sp"
+        app:layout_constraintTop_toBottomOf="@id/contact_view_header"
+        app:layout_constraintBottom_toBottomOf="@id/contact_view_header"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="A"/>
+
+
+    <ImageButton
+        android:id="@+id/favorite_image_view"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/circle"
+        android:src="@drawable/favorite_star_icon"
+        app:layout_constraintTop_toBottomOf="@id/contact_view_header"
+        app:layout_constraintBottom_toBottomOf="@id/contact_view_header"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+        android:id="@+id/imageCall"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/ic_call"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/contactInfoCircle" />
+
+    <View
+        android:id="@+id/divider_line_2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/divider_line"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageCall"/>
+
+    <View
+        android:id="@+id/phone_icon"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/ic_phone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider_line_2"/>
+
+    <TextView
+        android:id="@+id/tel_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#7e7e7e"
+        android:layout_marginTop="5dp"
+        android:textSize="20sp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintTop_toBottomOf="@id/divider_line_2"
+        app:layout_constraintStart_toEndOf="@id/phone_icon"
+        tools:text="@tools:sample/lorem" />
+
+    <View
+        android:id="@+id/divider_line_3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/divider_line"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/phone_icon"/>
+
+    <View
+        android:id="@+id/gender_view"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:background="@drawable/gender_icon"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@id/divider_line_3"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/gender_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="#7e7e7e"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintStart_toEndOf="@id/gender_view"
+        app:layout_constraintTop_toBottomOf="@id/divider_line_3"
+        tools:text="Ipsum"/>
+
+    <View
+        android:id="@+id/divider_line4"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/divider_line"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gender_view"/>
+
+    <View
+        android:id="@+id/cake_icon"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:background="@drawable/ic_birthday"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="30dp"
+        app:layout_constraintTop_toBottomOf="@id/divider_line4"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/day_month_year_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="#7e7e7e"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintStart_toEndOf="@id/cake_icon"
+        app:layout_constraintTop_toBottomOf="@id/divider_line4"
+        tools:text="Lorem"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/editContactsActionBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:focusable="true"
+        app:backgroundTint="#2a2a2a"
+        android:src="@drawable/ic_edit"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

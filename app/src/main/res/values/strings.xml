@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="gender">
+        <item>None</item>
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
+    <string name="add_text">Add</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="tel">Tel. %s</string>
+    <string name="name_surname">%s %s</string>
+    <string name="is_gender">Gender : %s</string>
+    <string name="favorites">Favorites</string>
+    <string name="permission_delete_text">Do you really want to delete contact ???</string>
+    <string name="a_warning_text">A warning !!!</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="name">Name</string>
+    <string name="surname">Surname</string>
+    <string name="phone">Phone</string>
+    <string name="enter_name">Enter Name</string>
+    <string name="enter_surname">Enter Surname</string>
+    <string name="enter_number">Enter Number</string>
+    <string name="gender">Gender :</string>
+    <string name="_00">00</string>
+    <string name="_0000">0000</string>
+    <string name="data_picker">Data Picker</string>
+    <string name="open">Open</string>
+    <string name="day">Day</string>
+    <string name="month">Month</string>
+    <string name="year">Year</string>
+    <string name="day_month_year_text_view">%s/ %s/ %s</string>
+    <string name="date_of_birth">Date of birth:</string>
+    <string name="delete_all">Delete All…</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="Contacts">Contacts</string>
+    <string name="Favorites">Favorites</string>
+    <string name="lorem_ipsum">Lorem Ipsum</string>
+    <string name="choose_photo">Choose photo</string>
+    <string name="cancel">Cancel</string>
+    <string name="change_photo">Change photo</string>
+    <string name="remove_photo">Remove photo</string>
+    <string name="title_activity_test">Test</string>
+    <string name="action_search">action_search</string>
+</resources>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <View
+        android:id="@+id/recyclerViewCircle"
+        android:layout_width="175dp"
+        android:layout_height="175dp"
+        android:background="@drawable/circle"
+        android:layout_marginStart="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.200" />
+
+    <TextView
+        android:id="@+id/favorite_first_letter_of_the_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="100sp"
+        android:textColor="#1c92f2"
+        app:layout_constraintStart_toStartOf="@id/recyclerViewCircle"
+        app:layout_constraintEnd_toEndOf="@id/recyclerViewCircle"
+        app:layout_constraintTop_toTopOf="@id/recyclerViewCircle"
+        app:layout_constraintBottom_toBottomOf="@id/recyclerViewCircle"
+        tools:text="L" />
+
+    <TextView
+        android:id="@+id/favorite_contact_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recyclerViewCircle"
+        tools:text="Lorem"/>
+
+    <View
+        android:id="@+id/favoriteCallCircle"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:background="@drawable/circle2"
+        android:layout_marginStart="130dp"
+        android:layout_marginBottom="35dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageButton
+        android:id="@+id/favoriteImageCall"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/ic_call"
+        app:layout_constraintTop_toTopOf="@id/favoriteCallCircle"
+        app:layout_constraintBottom_toBottomOf="@id/favoriteCallCircle"
+        app:layout_constraintEnd_toEndOf="@id/favoriteCallCircle"
+        app:layout_constraintStart_toStartOf="@id/favoriteCallCircle"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
