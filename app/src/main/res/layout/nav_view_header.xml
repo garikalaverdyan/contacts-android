@@ -7,5 +7,5 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/navigationview_header_image" />
+        android:background="@drawable/contact_view_header" />
 </LinearLayout>

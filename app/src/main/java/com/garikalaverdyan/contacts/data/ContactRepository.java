@@ -14,6 +14,7 @@ public class ContactRepository {
         void onAdd(int id);
         void onChange(int id, Contact c);
         void onDelete(int id);
+        void onChangeImagePath(int id, String path);
         void onToggleFavorite(int id, boolean isFavorite);
     }
 
@@ -42,6 +43,9 @@ public class ContactRepository {
 
     public void changeImagePath(int id, String path){
         dbHelper.changeImagePath(id, path);
+        for (ContactChangeListener listener : listeners) {
+            listener.onChangeImagePath(id, path);
+        }
     }
 
     public Contact getContact(int id){

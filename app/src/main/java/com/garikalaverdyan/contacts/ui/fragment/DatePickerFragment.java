@@ -8,10 +8,10 @@ import androidx.fragment.app.DialogFragment;
 import java.util.Calendar;
 
 public class DatePickerFragment extends DialogFragment {
-    Calendar c = Calendar.getInstance();
-    int year = c.get(Calendar.YEAR);
-    int month = c.get(Calendar.MONTH);
-    int day = c.get(Calendar.DAY_OF_MONTH);
+    private Calendar c = Calendar.getInstance();
+    private int year = c.get(Calendar.YEAR);
+    private int month = c.get(Calendar.MONTH);
+    private int day = c.get(Calendar.DAY_OF_MONTH);
 
     @NonNull
     @Override

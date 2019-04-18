@@ -15,4 +15,5 @@
     <color name="gold">#d99f16</color>
     <color name="action_bar_color">#1c92f2</color>
     <color name="black">#050505</color>
+    <color name="status_bar_color">#CC7575</color>
 </resources>

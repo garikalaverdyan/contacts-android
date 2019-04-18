@@ -5,20 +5,29 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+
 import androidx.core.app.ActivityCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
+
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.MenuItem;
 import android.widget.Toast;
+import androidx.appcompat.widget.Toolbar;
+
 import com.garikalaverdyan.contacts.data.Contact;
 import com.garikalaverdyan.contacts.data.ContactRepository;
 import com.garikalaverdyan.contacts.App;
 import com.garikalaverdyan.contacts.R;
 import com.garikalaverdyan.contacts.ui.adapter.FavoriteContactsAdapter;
+import com.garikalaverdyan.contacts.utils.ChangeStatusBarColor;
+
 import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -29,18 +38,25 @@ public class FavoriteListActivity extends AppCompatActivity implements FavoriteC
     private static final int REQUEST_PHONE_CALL = 999;
     private FavoriteContactDataTask task;
     private FavoriteContactsAdapter favoriteContactsAdapter;
-    @BindView(R.id.favorite_contacts_recycler_view) RecyclerView recyclerView;
-    @BindView(R.id.swipeFavoriteContacts) SwipeRefreshLayout favoriteContactsRefresh;
+    @BindView(R.id.favorite_contacts_recycler_view)
+    RecyclerView recyclerView;
+    @BindView(R.id.swipeFavoriteContacts)
+    SwipeRefreshLayout favoriteContactsRefresh;
+    @BindView(R.id.favorite_activity_toolbar)
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getContactRepository().addListener(this);
         setContentView(R.layout.activity_favorite_list);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        setTitle(R.string.Favorites);
 
         ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle(R.string.Favorites);
 
         favoriteContactsAdapter = new FavoriteContactsAdapter();
         favoriteContactsAdapter.setClickListener(this);
@@ -57,6 +73,8 @@ public class FavoriteListActivity extends AppCompatActivity implements FavoriteC
             favoriteContactsAdapter.notifyDataSetChanged();
         });
         task.execute();
+
+        new ChangeStatusBarColor(getWindow(), this);
     }
 
     @Override
@@ -90,7 +108,7 @@ public class FavoriteListActivity extends AppCompatActivity implements FavoriteC
             int index = favoriteContactsAdapter.getItemIndex(id);
             favoriteContactsAdapter.removeContact(index);
             favoriteContactsAdapter.notifyItemRemoved(index);
-        }else{
+        } else {
             favoriteContactsAdapter.addContact(getContactRepository().getContact(id));
             favoriteContactsAdapter.notifyItemInserted(favoriteContactsAdapter.getItemCount() - 1);
         }
@@ -101,6 +119,10 @@ public class FavoriteListActivity extends AppCompatActivity implements FavoriteC
         int index = favoriteContactsAdapter.getItemIndex(id);
         favoriteContactsAdapter.removeContact(index);
         favoriteContactsAdapter.notifyItemRemoved(index);
+    }
+
+    @Override
+    public void onChangeImagePath(int id, String path) {
     }
 
     @Override

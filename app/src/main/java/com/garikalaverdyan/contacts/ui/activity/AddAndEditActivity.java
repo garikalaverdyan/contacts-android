@@ -3,6 +3,7 @@ package com.garikalaverdyan.contacts.ui.activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 import androidx.appcompat.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -21,6 +22,7 @@ import com.garikalaverdyan.contacts.data.ContactRepository;
 import com.garikalaverdyan.contacts.ui.fragment.DatePickerFragment;
 import com.garikalaverdyan.contacts.App;
 import com.garikalaverdyan.contacts.R;
+import com.garikalaverdyan.contacts.utils.ChangeStatusBarColor;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -43,6 +45,8 @@ public class AddAndEditActivity extends AppCompatActivity implements DatePickerD
     TextView yearView;
     @BindView(R.id.gender_spinner)
     Spinner spinner;
+    @BindView(R.id.addAndEdit_activity_toolbar)
+    Toolbar toolbar;
     public static final String ACTION_ADD = "action-add";
     public static final String ACTION_EDIT = "action-edit";
     private String[] gender;
@@ -52,10 +56,13 @@ public class AddAndEditActivity extends AppCompatActivity implements DatePickerD
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_and_edit);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        setTitle("");
 
         ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("");
 
         ArrayAdapter adapter =
                 ArrayAdapter.createFromResource(this, R.array.gender, android.R.layout.simple_spinner_item);
@@ -77,6 +84,8 @@ public class AddAndEditActivity extends AppCompatActivity implements DatePickerD
             isFavorite = contact.isFavorite();
             spinner.setSelection(adapter.getPosition(contact.getGender()));
         }
+
+        new ChangeStatusBarColor(getWindow(), this);
     }
 
     @OnClick(R.id.button_calendar_view)

@@ -3,16 +3,15 @@ package com.garikalaverdyan.contacts.ui.activity;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import com.esafirm.imagepicker.model.Image;
+import com.garikalaverdyan.contacts.utils.ChangeStatusBarColor;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,8 +32,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import permissions.dispatcher.NeedsPermission;
-import permissions.dispatcher.OnShowRationale;
-import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.RuntimePermissions;
 
 @RuntimePermissions
@@ -60,6 +57,8 @@ public class ContactInfoActivity extends AppCompatActivity {
     FloatingActionButton editButton;
     @BindView(R.id.contact_view_header)
     ImageView contactInfoHeaderView;
+    @BindView(R.id.info_activity_toolbar)
+    Toolbar toolbar;
     public static final int INFO_ACTIVITY_REQUEST_CODE_EDIT = 2;
     private static final int REQUEST_PHONE_CALL = 99;
     private Contact contact;
@@ -69,10 +68,15 @@ public class ContactInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_info);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle("");
 
         ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
+
+        new ChangeStatusBarColor(getWindow(), getApplicationContext());
 
         contact = getContactRepository().getContact(getIntent().getIntExtra("contact_id", 0));
         setInfoView();
@@ -92,7 +96,7 @@ public class ContactInfoActivity extends AppCompatActivity {
 
             @Override
             public void onRemovePhoto() {
-                contactInfoHeaderView.setImageResource(R.drawable.andriod_header);
+                contactInfoHeaderView.setImageResource(R.drawable.noimage);
                 getContactRepository().changeImagePath(contact.getId(), null);
                 contact.setImagePath(null);
             }
@@ -101,9 +105,11 @@ public class ContactInfoActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        ContactInfoActivityPermissionsDispatcher.onRequestPermissionsResult(ContactInfoActivity.this, requestCode, grantResults);
+        ContactInfoActivityPermissionsDispatcher.onRequestPermissionsResult(
+                ContactInfoActivity.this, requestCode, grantResults);
     }
 
     @OnClick(R.id.favorite_image_view)
@@ -186,7 +192,8 @@ public class ContactInfoActivity extends AppCompatActivity {
         }
     }
 
-    @NeedsPermission(value = {Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
+    @NeedsPermission(value = {Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE})
     public void openImagePicker(){
         ImagePicker.create(ContactInfoActivity.this)
                 .single()

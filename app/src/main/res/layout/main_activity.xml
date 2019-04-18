@@ -15,9 +15,12 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/main_activity_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#1c92f2"
-            xmlns:android="http://schemas.android.com/apk/res/android" />
+            android:layout_height="?actionBarSize"
+            app:titleTextAppearance="@style/ToolbarTextAppearance.Title"
+            app:subtitleTextAppearance="@style/ToolbarTextAppearance.Subtitle"
+            android:background="#CC7575"
+            style="@style/MyToolbar"
+            xmlns:android="http://schemas.android.com/apk/res/android"/>
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipeContacts"
@@ -25,12 +28,16 @@
             android:layout_marginTop="55dp"
             android:layout_width="match_parent">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/contactView"
+            <com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView
+                android:id="@+id/recyclerViewContactList"
                 android:background="#FFFFFF"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scrollbars="vertical"/>
+                app:fastScrollPopupBgColor="#1c92f2"
+                app:fastScrollPopupTextColor="#FFFFFF"
+                app:fastScrollThumbColor="#1c92f2"
+                app:fastScrollTrackColor="#FF9696"
+                app:fastScrollPopupBackgroundSize="70dp"/>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -40,7 +47,7 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
             android:focusable="true"
-            app:backgroundTint="@color/action_bar_color"
+            app:backgroundTint="#CC7575"
             android:src="@drawable/ic_person_add"
             android:clickable="true"/>
     </FrameLayout>

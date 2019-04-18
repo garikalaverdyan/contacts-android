@@ -35,10 +35,12 @@
         </activity>
         <activity
             android:name=".ui.activity.ContactInfoActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.activity.AddAndEditActivity" />
-        <activity android:name=".ui.activity.FavoriteListActivity" />
+        <activity android:name=".ui.activity.AddAndEditActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ui.activity.FavoriteListActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
-
 </manifest>

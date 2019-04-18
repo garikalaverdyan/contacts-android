@@ -1,28 +1,31 @@
 package com.garikalaverdyan.contacts.ui.adapter;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
+import android.content.Context;
 import android.os.Build;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.TextView;
+import java.io.File;
 import java.util.ArrayList;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.garikalaverdyan.contacts.data.Contact;
 import com.garikalaverdyan.contacts.R;
+import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ContactViewHolder>
-        implements Filterable {
+        implements Filterable, FastScrollRecyclerView.SectionedAdapter {
 
     public interface ContactListAdapterListener {
         void onItemClick(Contact contact);
@@ -32,14 +35,20 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
     private ArrayList<Contact> contactListFiltered;
     private ContactListAdapterListener clickListener;
     private boolean isFiltered = false;
+    private Context context;
 
-    public ContactListAdapter() {
+    public ContactListAdapter(Context context) {
         contactListFiltered = new ArrayList<>();
+        this.context = context;
     }
 
     class ContactViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.contactListViewName) TextView name;
-        @BindView(R.id.contactListViewCircle) TextView firstLetterOfTheText;
+        @BindView(R.id.contactListViewName)
+        TextView name;
+        @BindView(R.id.contactPhoto)
+        ImageView imageView;
+        @BindView(R.id.contactListViewTel)
+        TextView telView;
 
         @TargetApi(Build.VERSION_CODES.LOLLIPOP)
         public ContactViewHolder(View itemView) {
@@ -54,25 +63,24 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         }
 
         public void setData(Contact contact) {
-            String letter = contact.getName().toUpperCase();
-            char c = letter.charAt(0);
+            String path = contact.getImagePath();
+            File f;
 
             name.setText(contact.getName());
-            firstLetterOfTheText.setText(String.valueOf(c));
+            telView.setText(contact.getNumber());
 
-            Drawable drawable = itemView.getContext().getResources().getDrawable(R.drawable.circle);
-
-            String color = changeCircleBackgroundColor(c);
-            if(color != null){
-                drawable.mutate().setColorFilter(Color.parseColor(color), PorterDuff.Mode.SRC_IN);
-                firstLetterOfTheText.setBackground(drawable);
+            if(path != null){
+                f = new File(contact.getImagePath());
+            }else{
+                f = null;
             }
-        }
-    }
 
-    @Override
-    public int getItemViewType(int position) {
-        return super.getItemViewType(position);
+            Glide.with(context)
+                    .load(f)
+                    .placeholder(R.drawable.ic_face)
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(imageView);
+        }
     }
 
     @NonNull
@@ -94,62 +102,21 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         }
     }
 
+    @SuppressLint("DefaultLocale")
+    @NonNull
+    @Override
+    public String getSectionName(int position) {
+        return String.valueOf(contactsList.get(position).getName().toUpperCase().charAt(0));
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
+    }
+
     @Override
     public int getItemCount() {
         return contactListFiltered.size();
-    }
-
-    public void addContact(Contact c) {
-        contactsList.add(c);
-    }
-    public void addData(ArrayList<Contact> data) {
-        contactsList.addAll(data);
-        contactListFiltered.addAll(data);
-    }
-
-    public void removeContact(int index) {
-        contactsList.remove(index);
-    }
-
-    public void setContact(int index, Contact contact) {
-        contactsList.set(index, contact);
-    }
-
-    public int getItemIndex(int id) {
-        for (int counter = 0; counter < contactsList.size(); counter++) {
-            if (contactsList.get(counter).getId() == id) {
-                return counter;
-            }
-        }
-        return -1;
-    }
-
-    public Contact getContact(int position) {
-        return contactsList.get(position);
-    }
-
-    public void setClickListener(ContactListAdapterListener itemClickListener) {
-        this.clickListener = itemClickListener;
-    }
-
-    public void changeAdapterData(ArrayList<Contact> contactList) {
-        this.contactListFiltered = contactList;
-    }
-
-    private String changeCircleBackgroundColor(char letter){
-        Character l = Character.toLowerCase(letter);
-        char[] letters = new char[]{'a', 'b', 'c' ,'d', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-                'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
-        String[] colors = new String[]{"#C4E538", "#FFC312", "#12CBC4", "#FDA7DF", "#ED4C67", "#F79F1F",
-                "#A3CB38", "#1289A7", "#D980FA", "#B53471", "#EE5A24", "#009432", "#0652DD", "#9980FA",
-                "#833471", "#EA2027", "#006266", "#1B1464", "#5758BB", "#6F1E51",  "#2f3542", "#ffa502",
-                "#b8e994", "#1e272e", "#d2dae2", "#0be881"};
-        for(int counter = 0; counter < letters.length; counter ++){
-            if(l.equals(letters[counter])){
-                return colors[counter];
-            }
-        }
-        return null;
     }
 
     @Override
@@ -196,5 +163,49 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
                 notifyDataSetChanged();
             }
         };
+    }
+
+    public void addContact(Contact c) {
+        contactsList.add(c);
+    }
+
+    public void addData(ArrayList<Contact> data) {
+        contactsList.addAll(data);
+        contactListFiltered.addAll(data);
+    }
+
+    public void changeImagePath(int index, String path){
+        contactsList.get(index).setImagePath(path);
+        contactListFiltered.get(index).setImagePath(path);
+    }
+
+    public void removeContact(int index) {
+        contactsList.remove(index);
+    }
+
+    public void setContact(int index, Contact contact) {
+        contactsList.set(index, contact);
+        contactListFiltered.set(index, contact);
+    }
+
+    public int getItemIndex(int id) {
+        for (int counter = 0; counter < contactsList.size(); counter++) {
+            if (contactsList.get(counter).getId() == id) {
+                return counter;
+            }
+        }
+        return -1;
+    }
+
+    public Contact getContact(int position) {
+        return contactsList.get(position);
+    }
+
+    public void setClickListener(ContactListAdapterListener itemClickListener) {
+        this.clickListener = itemClickListener;
+    }
+
+    public void changeAdapterData(ArrayList<Contact> contactList) {
+        this.contactListFiltered = contactList;
     }
 }

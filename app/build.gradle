@@ -11,7 +11,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
-        versionName "1.0"
+        versionName "anasun.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -23,7 +23,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
@@ -44,8 +44,10 @@ dependencies {
     implementation 'com.jakewharton:butterknife:10.1.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
 
-    /* Picasso*/
-    implementation 'com.squareup.picasso:picasso:2.71828'
+    /* Glide*/
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+    implementation 'jp.wasabeef:glide-transformations:4.0.1'
 
     /* Image Picker*/
     implementation 'com.github.esafirm.android-image-picker:imagepicker:2.0.0'
@@ -53,6 +55,9 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.9.0'
 
     /* Permission dispatcher*/
-    implementation "org.permissionsdispatcher:permissionsdispatcher:4.3.0"
+    implementation 'org.permissionsdispatcher:permissionsdispatcher:4.3.0'
     annotationProcessor "org.permissionsdispatcher:permissionsdispatcher-processor:4.3.0"
+
+    /* RecyclerView-fastScroll*/
+    implementation 'com.simplecityapps:recyclerview-fastscroll:2.0.0'
 }

@@ -4,38 +4,30 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-
 import androidx.annotation.NonNull;
-
+import com.garikalaverdyan.contacts.utils.ChangeStatusBarColor;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
-
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import androidx.appcompat.widget.SearchView;
 import android.widget.Toast;
-
 import com.garikalaverdyan.contacts.data.Contact;
 import com.garikalaverdyan.contacts.data.ContactRepository;
 import com.garikalaverdyan.contacts.ui.adapter.ContactListAdapter;
 import com.garikalaverdyan.contacts.App;
 import com.garikalaverdyan.contacts.R;
-
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -43,7 +35,7 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity implements ContactListAdapter.ContactListAdapterListener,
         ContactRepository.ContactChangeListener, SwipeRefreshLayout.OnRefreshListener {
 
-    @BindView(R.id.contactView)
+    @BindView(R.id.recyclerViewContactList)
     RecyclerView recyclerView;
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
@@ -53,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements ContactListAdapte
     NavigationView navigationView;
     @BindView(R.id.floatingActionBar)
     FloatingActionButton addContactButton;
-    public static final int REQUEST_CODE_ADD_BUTTON = 1;
+    public static final int REQUEST_CODE_ADD_CONTACT = 1;
     private ContactListAdapter contactAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     private SearchView searchView;
@@ -74,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements ContactListAdapte
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_hamburger);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        contactAdapter = new ContactListAdapter();
+        contactAdapter = new ContactListAdapter(this);
         contactAdapter.setClickListener(this);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -94,12 +86,10 @@ public class MainActivity extends AppCompatActivity implements ContactListAdapte
         drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
             public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
-
             }
 
             @Override
             public void onDrawerOpened(@NonNull View drawerView) {
-
             }
 
             @Override
@@ -115,13 +105,15 @@ public class MainActivity extends AppCompatActivity implements ContactListAdapte
 
             }
         });
+
+        new ChangeStatusBarColor(getWindow(), getApplicationContext());
     }
 
     @OnClick(R.id.floatingActionBar)
     void addButtonClick() {
         Intent intent = new Intent(MainActivity.this, AddAndEditActivity.class);
         intent.setAction(AddAndEditActivity.ACTION_ADD);
-        startActivityForResult(intent, REQUEST_CODE_ADD_BUTTON);
+        startActivityForResult(intent, REQUEST_CODE_ADD_CONTACT);
     }
 
     @Override
@@ -130,6 +122,7 @@ public class MainActivity extends AppCompatActivity implements ContactListAdapte
             searchView.setIconified(true);
             return;
         }
+
         super.onBackPressed();
     }
 
@@ -178,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements ContactListAdapte
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE_ADD_BUTTON && resultCode == RESULT_OK) {
+        if (requestCode == REQUEST_CODE_ADD_CONTACT && resultCode == RESULT_OK) {
             Contact c = data.getParcelableExtra("Contact");
             getContactRepository().addContact(c);
             onRefresh();
@@ -220,6 +213,13 @@ public class MainActivity extends AppCompatActivity implements ContactListAdapte
         int index = contactAdapter.getItemIndex(id);
         contactAdapter.removeContact(index);
         contactAdapter.notifyItemRemoved(index);
+    }
+
+    @Override
+    public void onChangeImagePath(int id, String path) {
+        int index = contactAdapter.getItemIndex(id);
+        contactAdapter.changeImagePath(index, path);
+        contactAdapter.notifyItemChanged(index);
     }
 
     @Override

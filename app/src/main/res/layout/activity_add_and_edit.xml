@@ -5,8 +5,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="20dp"
     tools:context="com.garikalaverdyan.contacts.ui.activity.AddAndEditActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/addAndEdit_activity_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="#CC7575"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:titleTextAppearance="@style/ToolbarTextAppearance.Title"
+        app:subtitleTextAppearance="@style/ToolbarTextAppearance.Subtitle"
+        style="@style/MyToolbar"
+        xmlns:android="http://schemas.android.com/apk/res/android"/>
 
     <View
         android:id="@+id/person_view"
@@ -24,10 +36,11 @@
         android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         android:hint="@string/enter_name"
         android:textStyle="italic"
+        android:layout_marginTop="10dp"
         android:textColor="@color/primary_text"
         app:layout_constraintStart_toEndOf="@id/person_view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/addAndEdit_activity_toolbar"/>
 
     <EditText
         android:id="@+id/surnameID"
@@ -114,8 +127,8 @@
         android:id="@+id/button_calendar_view"
         android:layout_width="65dp"
         android:layout_height="40dp"
-        android:background="#1c92f2"
-        android:text="Open"
+        android:background="#CC7575"
+        android:text="@string/open"
         app:layout_constraintStart_toEndOf="@id/ic_calendar_view"
         app:layout_constraintTop_toTopOf="@id/ic_calendar_view"
         app:layout_constraintBottom_toBottomOf="@id/ic_calendar_view"/>
